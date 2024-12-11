@@ -18,9 +18,24 @@ def generate_l_system(axiom, rules, iterations):
 # Função para desenhar a sequência L-system usando Turtle
 def draw_l_system(t, instructions, angle, distance):
     stack = []
+
+    color_map = {
+        'a': 'red', 'b': 'blue', 'c': 'green', 'd': 'yellow', 'e': 'purple',
+        'f': 'orange', 'g': 'pink', 'h': 'brown', 'i': 'gray', 'j': 'cyan',
+        'k': 'magenta', 'l': 'lime', 'm': 'maroon', 'n': 'navy', 'o': 'olive',
+        'p': 'teal', 'q': 'coral', 'r': 'gold', 's': 'silver', 't': 'indigo',
+        'u': 'violet', 'v': 'turquoise', 'w': 'tan', 'x': 'salmon', 'y': 'plum',
+        'z': 'khaki'
+    }
+
+    colors = 'keg'
+    current_color = -1
+
     for cmd in instructions:
         if cmd == 'L':
             t.forward(distance)
+        elif cmd == 'T':
+            t.backward(distance)
         elif cmd == '+':
             t.width(t.width()*2)
         elif cmd == '-':
@@ -40,19 +55,16 @@ def draw_l_system(t, instructions, angle, distance):
         elif cmd == 'l':
             t.left(angle)
         elif cmd in 'abcdefghijklmnopqrstuvwxyz':
-            color_map = {
-                'a': 'red', 'b': 'blue', 'c': 'green', 'd': 'yellow', 'e': 'purple',
-                'f': 'orange', 'g': 'pink', 'h': 'brown', 'i': 'gray', 'j': 'cyan',
-                'k': 'magenta', 'l': 'lime', 'm': 'maroon', 'n': 'navy', 'o': 'olive',
-                'p': 'teal', 'q': 'coral', 'r': 'gold', 's': 'silver', 't': 'indigo',
-                'u': 'violet', 'v': 'turquoise', 'w': 'tan', 'x': 'salmon', 'y': 'plum',
-                'z': 'khaki'
-            }
             t.pencolor(color_map.get(cmd, 'white'))
+        elif cmd in '$':
+            current_color+=1
+            current_color = 1 if current_color >= len(colors) else current_color
+
+            t.pencolor(color_map.get(colors[current_color], 'white'))
         else:
             print(f'Invalid command: {cmd}')
         
-variables, axiom, rules, iterations = read_file('in')
+variables, axiom, rules, iterations = read_file('in2')
 
 language_symbols = ['L', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '+', '-', '[', ']']
 
@@ -96,8 +108,8 @@ rules = convert_to_rules_dict(rules)
 if not valid_l_system:
     print('Invalid L-system')
 
-angle = 15
-distance = 20
+angle = 31
+distance = 7
 
 # Gerar sequência L-system
 l_system_string = generate_l_system(axiom, rules, iterations)
