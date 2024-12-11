@@ -35,6 +35,10 @@ def draw_l_system(t, instructions, angle, distance):
             t.pendown()
         elif cmd in '0123456789':
             t.right(int(cmd) * angle)
+        elif cmd == 'r':
+            t.right(angle)
+        elif cmd == 'l':
+            t.left(angle)
         elif cmd in 'abcdefghijklmnopqrstuvwxyz':
             color_map = {
                 'a': 'red', 'b': 'blue', 'c': 'green', 'd': 'yellow', 'e': 'purple',
@@ -91,10 +95,9 @@ rules = convert_to_rules_dict(rules)
 
 if not valid_l_system:
     print('Invalid L-system')
-    exit()
 
-angle = 25
-distance = 5
+angle = 15
+distance = 20
 
 # Gerar sequência L-system
 l_system_string = generate_l_system(axiom, rules, iterations)
