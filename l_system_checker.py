@@ -1,32 +1,41 @@
-def decision(rules, character, key):
-    for rule in rules[key]:
-        if rule[0] == character:
-            return rule
-    return rules[key][0]
+def expand_string(string, rules, n):
+    for _ in range(n):
+        expanded_string = ''  
+        for c in string:
+            rule = decision(rules, c) 
+            expanded_string += "".join(rule)  
+        string = expanded_string  
+    print(expanded_string)
+    return expanded_string
 
-def read_l_system(axiom, variables, rules, word, n = 10):
-    stack = ['$', axiom]
 
-    for c in word:
-        top = stack[-1]
+def decision(rules, key):
+    return rules[key][0]  # Para este caso, iremos ter só uma regra (determinístico)
 
-        if top in variables:
-            rule = decision(rules, c, top)
-            del stack[-1]
-            stack += [c for c in rule[::-1]]
-        elif top != c:
-            return False
+def verify_nth_string_with_stack(axiom, variables, rules, word, n):
 
-        del stack[-1]
+    stack = [('$', 0)]  # Pilha inicial com delimitador e iteração 0
+    stack.append((axiom, 0))
 
-        n -= 1
-        if n <= 0:
-            return True
+    for c in word:  
+        while stack:
+            top, iteration = stack.pop()
+            if iteration < n and top in variables:
+                rule = decision(rules, top)
+                stack.extend((symbol, iteration + 1) for symbol in reversed(rule))
+            elif top == c: 
+                break
+            else:
+                return False
+    return all(item[0] == '$' for item in stack)
 
-    return stack == ['$']
 
-s = "aaaab"
-rules = {"A":["aA", "b"]}
-variables = ["A"]
 
-print(read_l_system("A", variables, rules, s))
+
+axiom = "A"
+rules = {"A": ["AB"], "B": ["A"]}
+variables = ["A", "B"]
+n = 7
+s = "ABAABABAABAABABAABABAABAABABAABAAB"
+
+print(verify_nth_string_with_stack(axiom, variables, rules, s, n))

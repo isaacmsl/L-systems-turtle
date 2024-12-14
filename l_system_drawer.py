@@ -61,10 +61,8 @@ def draw_l_system(t, instructions, angle, distance):
             current_color = 1 if current_color >= len(colors) else current_color
 
             t.pencolor(color_map.get(colors[current_color], 'white'))
-        else:
-            print(f'Invalid command: {cmd}')
         
-variables, axiom, rules, iterations = read_file('in2')
+variables, axiom, rules, iterations = read_file('in')
 
 language_symbols = ['L', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '+', '-', '[', ']']
 
