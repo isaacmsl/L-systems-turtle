@@ -68,9 +68,10 @@ class LSystemDrawerMenager:
             if cmd == self.draw_rules["drawer"]:
                 t.forward(self.draw_rules["distance"])
             elif cmd == '+':
-                t.width(t.width()*2)
+                t.width(t.width() + 1)
             elif cmd == '-':
-                t.width(t.width()/2)
+                if t.width() > 0:
+                    t.width(t.width() - 1)
             elif cmd == '[':
                 stack.append((t.position(), t.heading()))
             elif cmd == ']':
