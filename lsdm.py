@@ -1,6 +1,6 @@
 import turtle
 class LSystemDrawerMenager:
-    def __init__(self):
+    def __init__(self) -> None:
         self.variables = None
         self.axiom = None
         self.rules = None
@@ -12,7 +12,7 @@ class LSystemDrawerMenager:
                                                         's': 'silver', 't': 'indigo', 'u': 'violet', 'v': 'turquoise', 'w': 'tan',
                                                         'x': 'salmon', 'y': 'plum', 'z': 'khaki'}
                             }
-    def read(self,file_path):
+    def read(self,file_path:str) -> None:
         try:
             with open(file_path, 'r') as file:
                 lines = file.readlines()
@@ -25,18 +25,22 @@ class LSystemDrawerMenager:
         except IOError:
             print(f"erro ao ler o arquivo {file_path}")
 
-    def generate(self,iterations=1):
+    def generate(self,iterations:int=1) -> str:
         result = self.axiom
         for i in range(iterations):
             templist = [self.rules[i] if i in self.rules.keys() else i for i in result]
             result = ''.join(templist)
         self.log = result
-        print(self.log)
 
-    def check(self,n):
+        return self.log
+
+    def check(self, n:int, sequence:str=None) -> bool:
         stack = [('$', 0)]
         stack.append((self.axiom, 0))
-        for c in self.log:  
+
+        sequence_to_check = sequence or self.log
+
+        for c in sequence_to_check:  
             while stack:
                 top, iteration = stack.pop()
                 if iteration < n and top in self.variables:
@@ -48,7 +52,7 @@ class LSystemDrawerMenager:
                     return False
         return all(item[0] == '$' for item in stack)
     
-    def draw(self,trace = False):
+    def draw(self,trace:bool = False) -> None:
         screen = turtle.Screen()
         screen.setup(width=800, height=800)  # Tamanho visível da janela
         screen.screensize(3000, 3000) 
@@ -90,5 +94,6 @@ class LSystemDrawerMenager:
         turtle.done()
         if trace:
             screen.update()
-    def __str__(self):
+
+    def __str__(self) -> str:
         return f"Variables: {self.variables}\nAxiom: {self.axiom}\nRules: {self.rules}\nLog: {self.log}"
