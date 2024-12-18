@@ -17,7 +17,7 @@ Instale os requisitos do projeto, execute o comando:
     $ pip install -e requiriments.txt
 
 ## Como usar?
-#### Tutorial mostrando como utilizar o pacote lsdm
+#### Tutorial mostrando como utilizar o pacote `lsdm`
 Consulte o arquivo, `tutorial.ipynb`
 
 #### Usando pelo terminal 
@@ -30,17 +30,17 @@ Parâmetros de Linha de Comando
 
 **Exemplos**
 
-1. Executando com parametros
+1. Executando com parâmetros
 ```sh
 $ python drawer.py --path <lsys-path> --iterations 3
 ```
 
-2. Executando sem parametros
+2. Executando sem parâmetros
 ```sh
 $ python drawer.py <lsys-path> 3
 ```
 
-3. Executando sem parametros e configurando para ver o desenho sendo feito
+3. Executando sem parâmetros e configurando para ver o desenho sendo feito
 ```sh
 $ python drawer.py <lsys-path> 3 --trace
 ```
